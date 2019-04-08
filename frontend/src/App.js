@@ -7,20 +7,37 @@ import axios from "axios";
 
 class App extends Component {
   state = {
-    products: [
-      { id: 1, Name: "apple", Kind: "fruit", Price: 2.0 },
-      { id: 2, Name: "banana", Kind: "fruit", Price: 10.0 },
-      { id: 3, Name: "orange", Kind: "fruit", Price: 12.0 }
-    ]
+    products: []
   };
   searchFunction = pro => {
-    //if (pro.maxPrice === -1 || pro.minPrice === -1) return;
-    console.log(pro);
-    axios.get(`https://jsonplaceholder.typicode.com/users`).then(res => {
-      let products = [{ id: 100, Name: "1111111", Kind: "fruit", Price: 2.0 }];
-      this.setState({ products });
-      console.log(this.state.products);
-    });
+    axios
+      .get(
+        `https://qsevhphgh0.execute-api.us-east-2.amazonaws.com/env/productFunction`,
+        {
+          params: {
+            kind: pro.kind,
+            minPrice: pro.minPrice,
+            maxPrice: pro.maxPrice
+          }
+        }
+      )
+      .then(res => {
+        let products = [];
+        let cnt = 1;
+        for (var i = 0; i < res.data.length; i++) {
+          let data = res.data[i];
+          let product = {
+            id: cnt,
+            Name: data.Name,
+            Kind: data.Kind,
+            Price: data.Price
+          };
+          products.push(product);
+          cnt++;
+        }
+        this.setState({ products });
+        console.log(this.state.products);
+      });
   };
   render() {
     return (

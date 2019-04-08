@@ -4,8 +4,8 @@ class Search extends Component {
   state = {
     item: {
       kind: "fruit",
-      minPrice: -1,
-      maxPrice: -1
+      minPrice: 0,
+      maxPrice: 100
     }
   };
   kindHandler = event => {
@@ -51,8 +51,7 @@ class Search extends Component {
                 type="number"
                 id="minPrice"
                 className="form-control"
-                required
-                onChange={e => this.maxPriceHandler(e)}
+                onChange={e => this.minPriceHandler(e)}
               />
             </div>
             <div className="col-auto my-1">
@@ -61,13 +60,13 @@ class Search extends Component {
                 type="number"
                 id="maxPrice"
                 className="form-control"
-                required
-                onChange={e => this.minPriceHandler(e)}
+                onChange={e => this.maxPriceHandler(e)}
               />
             </div>
             <div className="col-auto my-1">
               <button
                 className="btn btn-primary"
+                type="button"
                 onClick={() => this.props.searchFunction(this.state.item)}
               >
                 Search
