@@ -22,6 +22,7 @@ class App extends Component {
         }
       )
       .then(res => {
+        console.log(res.data);
         let products = [];
         let cnt = 1;
         for (var i = 0; i < res.data.length; i++) {
@@ -36,7 +37,6 @@ class App extends Component {
           cnt++;
         }
         this.setState({ products });
-        console.log(this.state.products);
       });
   };
   render() {
