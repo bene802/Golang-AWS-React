@@ -3,7 +3,15 @@ import Product from "./Product";
 import BootstrapTable from "react-bootstrap-table-next";
 class ProductList extends Component {
   state = {
-    columns: [
+    products: [
+      { Name: "apple", Kind: "fruit", Price: 2.0 },
+      { Name: "banana", Kind: "fruit", Price: 10.0 },
+      { Name: "orange", Kind: "fruit", Price: 12.0 }
+    ]
+  };
+
+  render() {
+    const columns = [
       {
         dataField: "Name",
         text: "Name"
@@ -17,15 +25,7 @@ class ProductList extends Component {
         text: "Price",
         sort: true
       }
-    ],
-    products: [
-      { Name: "apple", Kind: "fruit", Price: 2.0 },
-      { Name: "banana", Kind: "fruit", Price: 10.0 },
-      { Name: "orange", Kind: "fruit", Price: 12.0 }
-    ]
-  };
-
-  render() {
+    ];
     return (
       <React.Fragment>
         <div>
@@ -71,7 +71,7 @@ class ProductList extends Component {
           <BootstrapTable
             keyField="id"
             data={this.state.products}
-            columns={this.state.columns}
+            columns={columns}
           />
         </div>
       </React.Fragment>
