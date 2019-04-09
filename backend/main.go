@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"sort"
 	"strconv"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -31,12 +32,16 @@ func show(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, er
 	}
 
 	pdList := search(minPrice, maxPrice, kind)
+	sort.Slice(pdList, func(i, j int) bool {
+		return pdList[i].Price < pdList[j].Price
+	})
 	js, err := json.Marshal(pdList)
 	if err != nil {
 		return serverError(err)
 	}
 	return events.APIGatewayProxyResponse{
 		StatusCode: http.StatusOK,
+		Headers:    map[string]string{"Access-Control-Allow-Origin": "*"},
 		Body:       string(js),
 	}, nil
 
